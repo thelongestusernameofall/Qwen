@@ -273,6 +273,7 @@ def train():
     local_rank = training_args.local_rank
 
     device_map = "auto"
+    device_map = None # bugfix by simon
     world_size = int(os.environ.get("WORLD_SIZE", 1))
     ddp = world_size != 1
     if lora_args.q_lora:
