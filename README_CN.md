@@ -448,7 +448,7 @@ response, history = model.chat(tokenizer, "Hi", history=None)
 
 ### KV cache量化
 
-> 注意：由于Hugging Face的内部实现，本功能的支持文件`cache_autogptq_cuda_356.cpp`与`cache_autogptq_cuda_kernel_245.cu`可能没被下载。如需开启使用，请手动从相关位置下载，并放置到相应文件中。
+> 注意：由于Hugging Face的内部实现，本功能的支持文件`cache_autogptq_cuda_256.cpp`与`cache_autogptq_cuda_kernel_256.cu`可能没被下载。如需开启使用，请手动从相关位置下载，并放置到相应文件中。
 
 在模型推理时，我们可以将中间结果key以及value的值量化后压缩存储，这样便可以在相同的卡上存储更多的key以及value，增加样本吞吐。
 
@@ -1040,6 +1040,7 @@ print(response.choices[0].message.content)
 1. 根据需要使用的镜像版本，安装相应版本的Nvidia驱动：
   - `qwenllm/qwen:cu117`（**推荐**）：`>= 515.48.07`
   - `qwenllm/qwen:cu114`（不支持flash-attention）：`>= 470.82.01`
+  - `qwenllm/qwen:cu121`：`>= 530.30.02`
   - `qwenllm/qwen:latest`：与`qwenllm/qwen:cu117`相同
 
 2. 安装并配置[docker](https://docs.docker.com/engine/install/)和[nvidia-container-toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)：
