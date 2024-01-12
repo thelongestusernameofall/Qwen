@@ -5,11 +5,12 @@ import argparse
 from peft import AutoPeftModelForCausalLM
 from transformers import AutoTokenizer
 
-def merge(lora_path: str, out_path: str, shard_size: str = "2048MB"):
+
+def merge(lora_path: str, out_path: str, shard_size: str = "2048MB", device: str = "auto"):
     model = AutoPeftModelForCausalLM.from_pretrained(
         lora_path,
-        device_map="auto",
-        trust_remote_code=True
+        device_map=device,
+        trust_remote_code=True,
     ).eval()
     tokenizer = AutoTokenizer.from_pretrained(
         lora_path,  # path to the output directory
@@ -27,7 +28,9 @@ if __name__ == '__main__':
     argsparser.add_argument("-l", "--lora_path", type=str, required=True, help="lora model path")
     argsparser.add_argument("-o", "--out_path", type=str, required=True, help="output path")
     argsparser.add_argument("-s", "--shard_size", type=str, default="2048MB", help="shard size")
+    argsparser.add_argument("-d", "--device", type=str, default="auto",
+                            help="device to use, default is auto; may be cpu, cuda, cuda:0, etc.")
 
     args = argsparser.parse_args()
 
-    merge(args.lora_path, args.out_path, args.shard_size)
+    merge(args.lora_path, args.out_path, args.shard_size, args.device)
